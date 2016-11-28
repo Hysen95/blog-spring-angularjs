@@ -1,0 +1,114 @@
+
+<div class="container-fluid">
+  	<div class="row">
+	  	<div class="col-sm-1"></div>
+	      <div class="generic-container col-sm-10" >
+	          <div class="panel panel-default">
+	              <div class="panel-heading"><span class="lead">Roles</span></div>
+	              <div class="formcontainer">
+	                  <form ng-submit="ctrl.submit()" name="form" class="form-horizontal" novalidate>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label" for="file">Name</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.name" name="name" 
+	                                  	class="name form-control input-sm" placeholder="Enter name" 
+	                                  	ng-required="true" ng-minlength="4" ng-maxlength="100"  />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.name.$error.required" class="alert alert-danger">This is a required field</span>
+	                                      <span ng-show="form.name.$error.minlength" class="alert alert-danger">Minimum length required is 4</span>
+	                                      <span ng-show="form.name.$error.maxlength" class="alert alert-danger">Maximum length required is 100</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">Is Default</label>
+	                              <div class="col-md-7">
+		                              	<div class="btn-group">
+									        <label class="btn btn-success" ng-model="ctrl.model.isDefault" uib-btn-radio="0" uncheckable>0</label>
+									        <label class="btn btn-success" ng-model="ctrl.model.isDefault" uib-btn-radio="1" uncheckable>1</label>
+									    </div>
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.isDefault.$error.minlength" class="alert alert-danger">Minimum length required is 1</span>
+	                                      <span ng-show="form.isDefault.$error.maxlength" class="alert alert-danger">Maximum length required is 1</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">Parent role</label>
+	                              <div class="col-md-7">
+	                                  <input type="number" ng-model="ctrl.model.parentId" name="parentId" 
+	                                  	class="parentId form-control input-sm" placeholder="Enter parent id"  />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.parentId.$invalid"  class="alert alert-danger">This field is invalid</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-actions floatRight">
+	                              <input type="submit"  value="{{!ctrl.model.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="form.$invalid">
+	                              <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="form.$pristine">
+	                              	Reset Form
+	                              </button>
+	                          </div>
+	                      </div>
+	                  </form>
+	              </div>
+	          </div>
+	          <div class="panel panel-default">
+	              <div class="panel-heading" >
+	              	<div class="row">
+	              		<div class="col-sm-9">
+			              	<span class="lead"  ng-if="ctrl.list.length > 0">List of Roles</span>
+			              	<span class="lead"  ng-if="ctrl.list.length == 0">Empty list of Roles</span>
+	              		</div>
+	              		<div class="col-sm-3" ng-show="ctrl.list.length > 0">
+	              			<input type="text" placeholder="Search..." ng-model="searchText" class="form-control" />
+	              		</div>
+	              	</div>
+	              </div>
+	              <div class="tablecontainer table-responsive" ng-show="ctrl.list.length > 0">
+	                  <table class="table table-hover table-striped table-bordered" wt-responsive-table>
+	                      <thead>
+	                          <tr>
+	                              <th>ID</th>
+	                              <th>Name</th>
+	                              <th>Is Default</th>
+	                              <th>Parent ID</th>
+	                              <th>Operations</th>
+	                          </tr>
+	                      </thead>
+	                      <tbody>
+	                          <tr ng-repeat="u in ctrl.list | filter: searchText">
+	                              <td><span ng-bind="u.id"></span></td>
+	                              <td><span ng-bind="u.name"></span></td>
+	                              <td><span ng-bind="u.isDefault"></span></td>
+	                              <td><span ng-bind="u.parentId"></span></td>
+	                              <td class="operations">
+	                              	<button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success"
+	                              			tooltips tooltip-side="top" tooltip-template="Edit">
+	                              		<span class="glyphicon glyphicon-edit" ></span>
+	                              	</button>  
+	                              	<button type="button" ng-click="ctrl.permDelete(u.id)"  class="btn btn-danger"
+	                              			tooltips tooltip-side="top" tooltip-template="Delete">
+	                              		<span class="glyphicon glyphicon-trash"></span>
+	                              	</button>
+	                              </td>
+	                          </tr>
+	                      </tbody>
+	                  </table>
+	              </div>
+	          </div>
+	      </div>
+	      <div class="col-sm-1"></div>
+  	</div>
+ 	</div>

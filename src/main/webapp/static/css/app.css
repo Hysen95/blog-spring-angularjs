@@ -1,0 +1,49 @@
+#mainWrapper, body {
+	background-color: #f5f5f5
+}
+
+.form-control, body {
+	font-size: 12px !important
+}
+
+body .container-fluid {
+	margin-top: 30px
+}
+
+div.flash-message {
+	margin: 10px auto;
+	width: 98%;
+	position: absolute;
+	z-index: 1
+}
+
+.floatRight {
+	float: right;
+	margin-right: 18px
+}
+
+.has-error {
+	color: #8b0000
+}
+
+.has-error>span {
+	margin: 10px auto;
+	display: block
+}
+
+.table {
+	margin-bottom: 0
+}
+
+td {
+	overflow: auto;
+}
+
+td.operations button {
+	margin: 5px
+}
+
+.formcontainer {
+	background-color: #DAE8E8;
+	padding: 20px
+}

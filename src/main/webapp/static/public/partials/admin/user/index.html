@@ -1,0 +1,191 @@
+
+ <div class="container-fluid">
+  	<div class="row">
+	  	<div class="col-sm-1"></div>
+	      <div class="col-sm-10" >
+	          <div class="panel panel-default">
+	              <div class="panel-heading"><span class="lead">Users</span></div>
+	              <div class="formcontainer">
+	                  <form ng-submit="ctrl.submit()" name="form" class="form-horizontal" novalidate>
+	                  
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">First name</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.firstName" name="firstname" 
+	                                  	class="firstname form-control input-sm" placeholder="Enter your first name" ng-required="true" 
+	                                  	ng-minlength="4" ng-maxlength="255"  />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.firstname.$error.required"  class="alert alert-danger">This is a required field</span>
+	                                      <span ng-show="form.firstname.$error.minlength"  class="alert alert-danger">Minimum length required is 4</span>
+	                                      <span ng-show="form.firstname.$error.maxlength"  class="alert alert-danger">Maximum length required is 255</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">Last name</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.lastName" 
+	                                  	name="lastname" class="lastname form-control input-sm" placeholder="Enter your last name" ng-required="true" 
+	                                  	ng-minlength="4" ng-maxlength="255" />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.lastname.$error.required"  class="alert alert-danger">This is a required field</span>
+	                                      <span ng-show="form.lastname.$error.minlength"  class="alert alert-danger">Minimum length required is 4</span>
+	                                      <span ng-show="form.lastname.$error.maxlength"  class="alert alert-danger">Maximum length required is 255</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">Username</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.username" 
+	                                  	name="username" class="username form-control input-sm" placeholder="Enter your username" ng-required="true" 
+	                                  	ng-minlength="4" ng-maxlength="255" />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.username.$error.required"  class="alert alert-danger">This is a required field</span>
+	                                      <span ng-show="form.username.$error.minlength"  class="alert alert-danger">Minimum length required is 4</span>
+	                                      <span ng-show="form.username.$error.maxlength"  class="alert alert-danger">Maximum length required is 255</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">Password</label>
+	                              <div class="col-md-7">
+	                                  <input type="password" ng-model="ctrl.model.password" 
+	                                  	name="password" class="password form-control input-sm" placeholder="Enter your password" ng-required="true" 
+	                                  	ng-minlength="4" ng-maxlength="255"  />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.password.$error.required"  class="alert alert-danger">This is a required field</span>
+	                                      <span ng-show="form.password.$error.minlength"  class="alert alert-danger">Minimum length required is 4</span>
+	                                      <span ng-show="form.password.$error.maxlength"  class="alert alert-danger">Maximum length required is 255</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">Email</label>
+	                              <div class="col-md-7">
+	                                  <input type="email" ng-model="ctrl.model.email" name="email" 
+	                                  	class="email form-control input-sm" placeholder="Enter your Email" ng-required="true" 
+	                                  	ng-minlength="4" ng-maxlength="255"  />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.email.$error.required"  class="alert alert-danger">This is a required field</span>
+	                                      <span ng-show="form.email.$error.minlength"  class="alert alert-danger">Minimum length required is 4</span>
+	                                      <span ng-show="form.email.$error.maxlength"  class="alert alert-danger">Maximum length required is 255</span>
+	                                      <span ng-show="form.email.$invalid"  class="alert alert-danger">This field is invalid</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row" ng-show="ctrl.model.id != null">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">Roles</label>
+	                              <div class="col-md-7">
+		                              	<div class="btn-group">
+											<label ng-repeat="r in ctrl.roles"
+												ng-model="r.active"
+												ng-checked="r.active"
+												uib-btn-checkbox
+												class="btn btn-success">
+												{{ r.name }}
+											</label>
+									    </div>
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-actions floatRight">
+	                              <input type="submit"  value="{{!ctrl.model.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="form.$invalid">
+	                              <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="form.$pristine">
+	                              	Reset Form
+	                              </button>
+	                          </div>
+	                      </div>
+	                  </form>
+	              </div>
+	          </div>
+	          <div class="panel panel-default">
+	              <div class="panel-heading" >
+	              	<div class="row">
+	              		<div class="col-sm-9">
+			              	<span class="lead"  ng-if="ctrl.list.length > 0">List of Users</span>
+			              	<span class="lead"  ng-if="ctrl.list.length == 0">Empty list of Users</span>
+	              		</div>
+	              		<div class="col-sm-3" ng-show="ctrl.list.length > 0">
+	              			<input type="text" placeholder="Search..." ng-model="searchText" class="form-control" />
+	              		</div>
+	              	</div>
+	              </div>
+	              <div class="tablecontainer table-responsive" ng-show="ctrl.list.length > 0">
+	                  <table class="table table-hover table-striped table-bordered" wt-responsive-table>
+	                      <thead>
+	                          <tr>
+	                              <th>ID</th>
+	                              <th>Firstname</th>
+	                              <th>Lastname</th>
+	                              <th>Email</th>
+	                              <th>Username</th>
+	                              <th>Password</th>
+	                              <th>Roles</th>
+	                              <th>Created At</th>
+	                              <th>Deleted At</th>
+	                              <th>Operations</th>
+	                          </tr>
+	                      </thead>
+	                      <tbody>
+	                          <tr ng-repeat="u in ctrl.list | filter: searchText">
+	                              <td><span ng-bind="u.id"></span></td>
+	                              <td><span ng-bind="u.firstName"></span></td>
+	                              <td><span ng-bind="u.lastName"></span></td>
+	                              <td><span ng-bind="u.email"></span></td>
+	                              <td><span ng-bind="u.username"></span></td>
+	                              <td><span ng-bind="u.password"></span></td>
+	                              <td>
+	                              	<div ng-repeat="r in u.roles">
+	                              		<p ng-bind="r.name"></p>
+	                              	</div>
+	                              </td>
+	                              <td><span>{{u.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
+	                              <td><span>{{u.deletedAt | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
+	                              <td class="operations">
+	                              	<button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success"
+	                              			tooltips tooltip-side="top" tooltip-template="Edit">
+	                              		<span class="glyphicon glyphicon-edit" ></span>
+	                              	</button>  
+	                              	<button type="button" ng-click="ctrl.permDelete(u.id)"  class="btn btn-danger"
+	                              			tooltips tooltip-side="top" tooltip-template="Delete">
+	                              		<span class="glyphicon glyphicon-trash"></span>
+	                              	</button>
+	                              	<button type="button" ng-click="ctrl.softDelete(u.id)"  ng-show="u.deletedAt == null" class="btn btn-warning"
+	                              			tooltips tooltip-side="top" tooltip-template="Soft-delete">
+	                              		<span class="glyphicon glyphicon-trash"></span>
+	                              	</button>
+	                              	<button type="button" ng-click="ctrl.softReactive(u.id)"  ng-show="u.deletedAt != null" class="btn btn-primary"
+	                              			tooltips tooltip-side="top" tooltip-template="Active">
+	                              		<span class="glyphicon glyphicon-ok"></span>
+	                              	</button>
+	                              </td>
+	                          </tr>
+	                      </tbody>
+	                  </table>
+	              </div>
+	          </div>
+	      </div>
+	      <div class="col-sm-1"></div>
+  	</div>
+ 	</div>

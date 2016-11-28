@@ -1,0 +1,90 @@
+<html>
+  <head>  
+    <title>
+		Blog
+	</title>
+     <link rel="stylesheet" href="static/bower_components/bootstrap/dist/css/bootstrap.min.css"  />
+     <link rel="stylesheet" href="static/bower_components/angular-flash-alert/dist/angular-flash.min.css"  />
+     <link rel="stylesheet" href="static/bower_components/angular-tooltips/dist/angular-tooltips.min.css"  />
+     <link href="static/css/app.css" rel="stylesheet" />
+     <link href="static/css/admin.css" rel="stylesheet" />
+     <link rel="stylesheet" href="static/bower_components/angular-responsive-tables/release/angular-responsive-tables.min.css">
+  </head>
+  <body ng-cloak ng-app="App" ng-controller="AppController as ctrl">
+	  	<div class="row flash-message">
+	  		<div class="col-sm-3"></div>
+	  		<div class="col-sm-6">
+			  	<flash-message
+				    show-close="true">
+				    <div class="my-flash">{{ flash.text }}</div>
+				 </flash-message> 
+	  		</div>
+	  		<div class="col-sm-3"></div>
+	  	</div>
+  		<div id="topmenu-container">
+			<nav class="navbar navbar-default">
+			  <div class="container">
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="#">Blog</a>
+			    </div>
+			    <div id="navbar" class="navbar-collapse collapse">
+			      <ul class="nav navbar-nav">
+					  <li><a href="#" ng-class="getClass('/')">Home</a></li>
+			      </ul>
+			      <ul class="nav navbar-nav navbar-right">
+			      	<li>
+			      		<a href="#user/login" ng-class="ctrl.getClass('/user/login')" ng-show="currentUser == null">
+			      			Login
+			      		</a>
+			      	</li>
+			      	<li>
+			      		<a href="" ng-click="ctrl.logout()" ng-class="ctrl.getClass('/user/logout')" ng-show="currentUser != null">
+			      			Logout
+			      		</a>
+			      	</li>
+			        <li class="dropdown">
+			          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+			          	Admin
+			           <span class="caret"></span></a>
+			          <ul class="dropdown-menu">
+						  <li><a href="#/admin/user" ng-class="ctrl.getClass('/admin/user')">Users</a></li>
+						  <li><a href="#/admin/article" ng-class="ctrl.getClass('/admin/article')">Articles</a></li>
+						  <li><a href="#/admin/role" ng-class="ctrl.getClass('/admin/role')">Roles</a></li>
+			          </ul>
+			        </li>
+			      </ul>
+			    </div>
+			  </div>
+			</nav>
+  		</div>
+
+	  <div ng-view></div>
+	  
+      <script src="static/bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+      <script src="static/bower_components/angular/angular.min.js"></script>
+      <script src="static/bower_components/angular-route/angular-route.min.js"></script>
+      <script src="static/bower_components/angular-flash-alert/dist/angular-flash.min.js"></script>
+      <script src="static/bower_components/angular-tooltips/dist/angular-tooltips.min.js"></script>
+      <script src="static/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+	  <script src="static/bower_components/angular-responsive-tables/release/angular-responsive-tables.min.js"></script>
+<!--       <script src="static/min-js/app.js"></script> -->
+	  <script src="static/js/app.js"></script>
+	  <script src="static/js/controller/api/user.js"></script>
+	  <script src="static/js/controller/api/role.js"></script>
+	  <script src="static/js/controller/api/article.js"></script>
+	  <script src="static/js/controller/user.js"></script>
+	  <script src="static/js/interceptor/authentication.js"></script>
+	  <script src="static/js/interceptor/user_session.js"></script>
+	  <script src="static/js/service/api/user.js"></script>
+	  <script src="static/js/service/api/role.js"></script>
+	  <script src="static/js/service/api/article.js"></script>
+	  <script src="static/js/service/user.js"></script>
+	</body>
+</html>

@@ -1,0 +1,75 @@
+
+$NG-VALID : lightgreen;
+$NG-INVALID : red;
+$NG-INVALID-MINLENGTH-MAXLENGTH : yellow;
+
+.name.ng-valid,
+.title.ng-valid, 
+.subtitle.ng-valid, 
+.body.ng-valid, 
+.tags.ng-valid,
+.user.ng-valid,
+.isDefault.ng-valid,
+.identity.ng-valid,
+.credential.ng-valid,
+.username.ng-valid, 
+.password.ng-valid, 
+.firstname.ng-valid, 
+.lastname.ng-valid,
+.email.ng-valid,
+.parentId.ng-valid {
+    background-color: $NG-VALID;
+}
+
+.name.ng-dirty.ng-invalid-required,
+.title.ng-dirty.ng-invalid-required, 
+.body.ng-dirty.ng-invalid-required, 
+.tags.ng-dirty.ng-invalid-required, 
+.user.ng-dirty.ng-invalid-required,
+.isDefault.ng-dirty.ng-invalid-required,
+.identity.ng-dirty.ng-invalid-required, 
+.credential.ng-dirty.ng-invalid-required, 
+.username.ng-dirty.ng-invalid-required, 
+.password.ng-dirty.ng-invalid-required,
+.firstname.ng-dirty.ng-invalid-required,
+.lastname.ng-dirty.ng-invalid-required,
+.email.ng-dirty.ng-invalid-required {
+    background-color: $NG-INVALID;
+}
+
+.name.ng-dirty.ng-invalid-minlength,
+.title.ng-dirty.ng-invalid-minlength,
+.body.ng-dirty.ng-invalid-minlength,
+.tags.ng-dirty.ng-invalid-minlength,
+.isDefault.ng-dirty.ng-invalid-minlength {
+    background-color: $NG-INVALID-MINLENGTH-MAXLENGTH;
+}
+
+.name.ng-dirty.ng-invalid-maxlength,
+.title.ng-dirty.ng-invalid-maxlength,
+.subtitle.ng-dirty.ng-invalid-maxlength,
+.body.ng-dirty.ng-invalid-maxlength,
+.tags.ng-dirty.ng-invalid-maxlength,
+.isDefault.ng-dirty.ng-invalid-maxlength,
+.identity.ng-dirty.ng-invalid-minlength,
+.credential.ng-dirty.ng-invalid-minlength,
+.username.ng-dirty.ng-invalid-minlength,
+.password.ng-dirty.ng-invalid-minlength,
+.firstname.ng-dirty.ng-invalid-minlength,
+.lastname.ng-dirty.ng-invalid-minlength,
+.identity.ng-dirty.ng-invalid-maxlength,
+.credential.ng-dirty.ng-invalid-maxlength,
+.username.ng-dirty.ng-invalid-maxlength,
+.password.ng-dirty.ng-invalid-maxlength,
+.firstname.ng-dirty.ng-invalid-maxlength,
+.lastname.ng-dirty.ng-invalid-maxlength {
+    background-color: $NG-INVALID-MINLENGTH-MAXLENGTH;
+}
+
+.name.ng-dirty.ng-invalid,
+.user.ng-dirty.ng-invalid,
+.isDefault.ng-dirty.ng-invalid,
+.email.ng-dirty.ng-invalid-email,
+.parentId.ng-dirty.ng-invalid {
+	background-color: $NG-INVALID;
+}

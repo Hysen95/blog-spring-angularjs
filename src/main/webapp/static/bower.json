@@ -1,0 +1,11 @@
+{
+  "name": "first-spring-project",
+  "dependencies": {
+    "angular-flash-alert": "^2.3.0",
+    "ui-navbar": "^0.4.5",
+    "angular-tooltips": "^1.1.7",
+    "bootstrap-sass": "bootstrap-sass-official#^3.3.7",
+    "datatables.net": "^1.10.12",
+    "angular-responsive-tables": "^0.4.1"
+  }
+}

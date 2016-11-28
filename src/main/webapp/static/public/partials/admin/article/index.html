@@ -1,0 +1,153 @@
+
+<div class="container-fluid">
+  	<div class="row">
+	  	<div class="col-sm-1"></div>
+	      <div class="generic-container col-sm-10" >
+	          <div class="panel panel-default">
+	              <div class="panel-heading"><span class="lead">Articles</span></div>
+	              <div class="formcontainer">
+	                  <form ng-submit="ctrl.submit()" name="form" class="form-horizontal" novalidate>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label" for="file">Title</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.title" name="title" 
+	                                  	class="title form-control input-sm" placeholder="Enter title" ng-required="true" 
+	                                  	ng-maxlength="1000"  />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.title.$error.required"  class="alert alert-danger">This is a required field</span>
+	                                      <span ng-show="form.title.$error.maxlength" class="alert alert-danger">Maximum length required is 255</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label" for="file">Subtitle</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.subtitle" name="subtitle" 
+	                                  	class="subtitle form-control input-sm" placeholder="Enter subtitle" 
+	                                  	ng-maxlength="500"  />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.subtitle.$error.maxlength" class="alert alert-danger">Maximum length required is 500</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label" for="file">Body</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.body" name="body" 
+	                                  	class="body form-control input-sm" placeholder="Enter body" ng-required="true"   />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.body.$error.required" class="alert alert-danger">This is a required field</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label" for="file">Tags</label>
+	                              <div class="col-md-7">
+	                                  <input type="text" ng-model="ctrl.model.tags" name="tags" 
+	                                  	class="tags form-control input-sm" placeholder="Enter tags" ng-required="true"   />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.tags.$error.required" class="alert alert-danger">This is a required field</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row" >
+	                          <div class="form-group col-md-12">
+	                              <label class="col-md-2 control-label">User ID</label>
+	                              <div class="col-md-7">
+	                                  <input type="number" ng-model="ctrl.model.user.id" name="user" 
+	                                  	class="user form-control input-sm" placeholder="Enter user id"   ng-required="true" />
+	                                  <div class="has-error" ng-show="form.$invalid && form.$dirty">
+	                                      <span ng-show="form.user.$error.required" class="alert alert-danger">This is a required field</span>
+	                                  </div>
+	                              </div>
+	                          </div>
+	                      </div>
+	
+	                      <div class="row">
+	                          <div class="form-actions floatRight">
+	                              <input type="submit"  value="{{!ctrl.model.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="form.$invalid">
+	                              <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="form.$pristine">
+	                              		Reset Form
+	                              </button>
+	                          </div>
+	                      </div>
+	                  </form>
+	              </div>
+	          </div>
+	          <div class="panel panel-default">
+	              <div class="panel-heading" >
+	              	<div class="row">
+	              		<div class="col-sm-9">
+			              	<span class="lead"  ng-if="ctrl.list.length > 0">List of Articles</span>
+			              	<span class="lead"  ng-if="ctrl.list.length == 0">Empty list of Articles</span>
+	              		</div>
+	              		<div class="col-sm-3" ng-show="ctrl.list.length > 0">
+	              			<input type="text" placeholder="Search..." ng-model="searchText" class="form-control" />
+	              		</div>
+	              	</div>
+	              </div>
+	              <div class="tablecontainer table-responsive" ng-show="ctrl.list.length > 0">
+	                  <table class="table table-hover table-striped table-bordered" wt-responsive-table>
+	                      <thead>
+	                          <tr>
+	                              <th>ID</th>
+	                              <th>Title</th>
+	                              <th>Subtitle</th>
+	                              <th>Body</th>
+	                              <th>Tags</th>
+	                              <th>Created At</th>
+	                              <th>Deleted At</th>
+	                              <th>User ID</th>
+	                              <th>Operations</th>
+	                          </tr>
+	                      </thead>
+	                      <tbody>
+	                          <tr ng-repeat="u in ctrl.list | filter: searchText">
+	                              <td><span ng-bind="u.articleId"></span></td>
+	                              <td><span ng-bind="u.title"></span></td>
+	                              <td><span ng-bind="u.subtitle"></span></td>
+	                              <td><span ng-bind="u.body"></span></td>
+	                              <td><span ng-bind="u.tags"></span></td>
+	                              <td><span>{{u.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
+	                              <td><span>{{u.deletedAt | date:'yyyy-MM-dd HH:mm:ss'}}</span></td>
+	                              <td><span ng-bind="u.user.id"></span></td>
+	                              <td class="operations">
+	                              	<button type="button" ng-click="ctrl.edit(u.id)" class="btn btn-success"
+	                              			tooltips tooltip-side="top" tooltip-template="Edit">
+	                              		<span class="glyphicon glyphicon-edit" ></span>
+	                              	</button>  
+	                              	<button type="button" ng-click="ctrl.permDelete(u.id)"  class="btn btn-danger"
+	                              			tooltips tooltip-side="top" tooltip-template="Delete">
+	                              		<span class="glyphicon glyphicon-trash"></span>
+	                              	</button>
+	                              	<button type="button" ng-click="ctrl.softDelete(u.id)"  ng-show="u.deletedAt == null" class="btn btn-warning"
+	                              			tooltips tooltip-side="top" tooltip-template="Soft-delete">
+	                              		<span class="glyphicon glyphicon-trash"></span>
+	                              	</button>
+	                              	<button type="button" ng-click="ctrl.softReactive(u.id)"  ng-show="u.deletedAt != null" class="btn btn-primary"
+	                              			tooltips tooltip-side="top" tooltip-template="Active">
+	                              		<span class="glyphicon glyphicon-ok"></span>
+	                              	</button>
+	                              </td>
+	                          </tr>
+	                      </tbody>
+	                  </table>
+	              </div>
+	          </div>
+	      </div>
+	      <div class="col-sm-1"></div>
+  	</div>
+ 	</div>
