@@ -1,5 +1,4 @@
-/target/
-node_modules/
-node_modules/
-bower_components/
-node/
+target
+node_modules
+bower_components
+.*
