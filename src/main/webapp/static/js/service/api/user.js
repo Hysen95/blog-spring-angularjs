@@ -1,124 +1,166 @@
-'use strict';
 
-angular.module('App').factory('UserAPIService', 
-		['$http', '$q', 'API_CONSTANTS', 
-			function($http, $q, API_CONSTANTS){
-	
-	var self = this;
-	
-	var currentService = 'user';
 
-    var REST_SERVICE_URI = API_CONSTANTS.restServiceURI + currentService + '/';
+angular.module("App").factory("UserAPIService",
+		["$http", "$q", "API_CONSTANTS",
+			function ($http, $q, API_CONSTANTS) {
 
-    var factory = {
-        fetchAll: fetchAll,
-        fetchById: fetchById,
-        create: create,
-        update: update,
-        permDelete: permDelete,
-        softDelete: softDelete,
-        softReactive: softReactive
+	let self = this;
+
+	let currentService = "user";
+
+    let REST_SERVICE_URI = API_CONSTANTS.restServiceURI + currentService + "/";
+
+    let factory = {
+        "fetchAll": fetchAll,
+        "fetchById": fetchById,
+        "create": create,
+        "update": update,
+        "permDelete": permDelete,
+        "softDelete": softDelete,
+        "softReactive": softReactive
     };
 
     return factory;
 
-    function fetchAll() {
-        var deferred = $q.defer();
+    function fetchAll () {
+
+        let deferred = $q.defer();
         $http.get(REST_SERVICE_URI)
             .then(
             function (response) {
+
                 deferred.resolve(response.data);
-            },
-            function(errResponse){
+
+},
+            function (errResponse) {
+
                 deferred.reject(errResponse);
-            }
+
+}
         );
         return deferred.promise;
-    }
-    
-    function fetchById(id) {
-        var deferred = $q.defer();
+
+}
+
+    function fetchById (id) {
+
+        let deferred = $q.defer();
         $http.get(REST_SERVICE_URI, id)
             .then(
             function (response) {
+
                 deferred.resolve(response.data);
-            },
-            function(errResponse){
+
+},
+            function (errResponse) {
+
                 deferred.reject(errResponse);
-            }
+
+}
         );
         return deferred.promise;
-    }
 
-    function create(model) {
-        var deferred = $q.defer();
+}
+
+    function create (model) {
+
+        let deferred = $q.defer();
         $http.post(REST_SERVICE_URI, model)
             .then(
             function (response) {
+
                 deferred.resolve(response.data);
-            },
-            function(errResponse){
+
+},
+            function (errResponse) {
+
                 deferred.reject(errResponse);
-            }
+
+}
         );
         return deferred.promise;
-    }
+
+}
 
 
-    function update(model, id) {
-        var deferred = $q.defer();
+    function update (model, id) {
+
+        let deferred = $q.defer();
         $http.put(REST_SERVICE_URI + id, model)
             .then(
             function (response) {
+
                 deferred.resolve(response.data);
-            },
-            function(errResponse){
+
+},
+            function (errResponse) {
+
                 deferred.reject(errResponse);
-            }
+
+}
         );
         return deferred.promise;
-    }
 
-    function permDelete(id) {
-        var deferred = $q.defer();
+}
+
+    function permDelete (id) {
+
+        let deferred = $q.defer();
         $http.delete(REST_SERVICE_URI + id)
             .then(
             function (response) {
-                deferred.resolve(response.data);
-            },
-            function(errResponse){
-                deferred.reject(errResponse);
-            }
-        );
-        return deferred.promise;
-    }
 
-    function softDelete(id) {
-        var deferred = $q.defer();
-        $http.delete(REST_SERVICE_URI + 'soft/' + id)
-            .then(
-            function (response) {
                 deferred.resolve(response.data);
-            },
-            function(errResponse){
+
+},
+            function (errResponse) {
+
                 deferred.reject(errResponse);
-            }
+
+}
         );
         return deferred.promise;
-    }
-    
-    function softReactive(id) {
-    	var deferred = $q.defer();
-        $http.put(REST_SERVICE_URI + 'soft/' + id)
+
+}
+
+    function softDelete (id) {
+
+        let deferred = $q.defer();
+        $http.delete(REST_SERVICE_URI + "soft/" + id)
             .then(
             function (response) {
+
                 deferred.resolve(response.data);
-            },
-            function(errResponse){
+
+},
+            function (errResponse) {
+
                 deferred.reject(errResponse);
-            }
+
+}
         );
         return deferred.promise;
-    }
+
+}
+
+    function softReactive (id) {
+
+    	let deferred = $q.defer();
+        $http.put(REST_SERVICE_URI + "soft/" + id)
+            .then(
+            function (response) {
+
+                deferred.resolve(response.data);
+
+},
+            function (errResponse) {
+
+                deferred.reject(errResponse);
+
+}
+        );
+        return deferred.promise;
+
+}
 
 }]);

@@ -1,19 +1,26 @@
 
-'use strict';
 
-angular.module("App").service("UserSessionInterceptor", ['$injector', '$rootScope', function($injector, $rootScope) {
+angular.module("App").service("UserSessionInterceptor", ["$injector", "$rootScope", function ($injector, $rootScope) {
+
 	return {
-		 'request': function(config) {
-			var UserService = $injector.get("UserService");
+		 "request": function (config) {
+
+			let UserService = $injector.get("UserService");
 			return UserService.getUserAuthenticated().then(
-				function(response) {
+				function (response) {
+
 					$rootScope.currentUser = response;
-				}
+
+}
 			);
 			return config;
-		},
-		'responseError': function(response) {
+
+},
+		"responseError": function (response) {
+
 	        return response;
-	    }
-	}
+
+}
+	};
+
 }]);

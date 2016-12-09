@@ -1,66 +1,260 @@
 
-'use strict';
-
-var gulp = require('gulp'),  
+/* CONSTS */
+const clean = require("gulp-clean"),
+	concat = require("gulp-concat"),
+	cssDeclarationSorter = require("css-declaration-sorter"),
+	eslint = require("gulp-eslint"),
+	gulp = require("gulp"),
+	gulpIf = require("gulp-if"),
+	minifyCSS = require("gulp-clean-css"),
+	minifyJS = require("gulp-minify"),
+	postCSS = require("gulp-postcss"),
+	rename = require("gulp-rename"),
 	sass = require("gulp-sass"),
-    notify = require("gulp-notify"),
-    bower = require('gulp-bower'),
-    uglify = require('gulp-uglify'),
-    pump = require('pump'),
-    cleanCSS = require('gulp-clean-css'),
-    concat = require('gulp-concat');
+	sequence = require("gulp-sequence"),
+	sassLint = require("gulp-sass-lint"),
+	server = require("gulp-server-livereload");
 
-var config = {
-	sassPath: './sass',
-	cssPath: './css',
-	minifiedJSPath: './min-js/',
-	bowerDir: './bower_components'
-}
+const CSS_DIR = "./css",
+	JS_DIR = "./js",
+	SASS_DIR = "./sass";
+/* CONSTS */
 
-gulp.task('bower', function() {
-    return bower()
-        .pipe(gulp.dest(config.bowerDir))
+/* UTIL */
+const isFixed = function isFixed (file) {
+
+    return file.eslint !== null && file.eslint.fixed;
+
+};
+/* UTIL */
+
+/* CSS */
+gulp.task("css:clean", function cssClean () {
+
+  return gulp.src(CSS_DIR + "/*.min.css", {"read": false})
+	.pipe(clean());
+
 });
 
-gulp.task('sass', function() {
-    return gulp.src('./sass/**/*.scss')
-	    .pipe(sass().on('error', sass.logError))
-	    .pipe(gulp.dest(config.cssPath));
+gulp.task("css:minify", function cssMinify () {
+
+  return gulp.src([
+		CSS_DIR + "/*.css",
+		"!" + CSS_DIR + "/*.min.css"
+	])
+	.pipe(minifyCSS({
+		"compatibility": "ie8"
+	}))
+	.pipe(rename({
+		"suffix": ".min"
+	}))
+	.pipe(gulp.dest(CSS_DIR));
+
 });
 
-gulp.task('minify-css', function() {
-	  return gulp.src('./css/**/*.css')
-	    .pipe(cleanCSS({compatibility: 'ie8'}))
-	    .pipe(gulp.dest(config.cssPath));
-	});
+gulp.task("css:format", function cssFormat () {
 
-gulp.task('minify-js', function (cb) {
-  pump([
-        gulp.src('./js/**/*.js'),
-        uglify(),
-        gulp.dest(config.minifiedJSPath)
-    ],
-    cb
-  );
+  return gulp.src([
+		CSS_DIR + "/*.css",
+		"!" + CSS_DIR + "/*.min.css"
+	])
+    .pipe(postCSS([cssDeclarationSorter({"order": "smacss"})]))
+    .pipe(gulp.dest(CSS_DIR));
+
 });
 
-gulp.task('all-in-one-app-script', function() {
-	  return gulp.src('./js/**/*.js')
-	    .pipe(concat('app.js'))
-	    .pipe(gulp.dest('./min-js/'));
-	});
+gulp.task("css:all-in-one", function cssAllInOne () {
 
-gulp.task('all-in-one-vendor-script', function() {
-	  return gulp.src('./bower_components/**/*.js')
-	    .pipe(concat('vendor.js'))
-	    .pipe(gulp.dest('./min-js/'));
-	});
+  return gulp.src([
+		CSS_DIR + "/**/*.css",
+		"!" + CSS_DIR + "/**/*.min.css", "!" + CSS_DIR + "/all.css"
+	])
+	.pipe(concat("all.css"))
+	.pipe(gulp.dest(CSS_DIR));
 
-gulp.task('default', [
-                      'bower', 
-                      'sass', 
-//                      'minify-js', 
-                      'minify-css', 
-                      'all-in-one-app-script',
-//                      'all-in-one-vendor-script'
-                      ]);
+});
+
+gulp.task("css:min-all-in-one", function cssAllInOne () {
+
+  return gulp.src([
+		CSS_DIR + "/**/*.min.css",
+		"!" + CSS_DIR + "/all.min.css"
+	])
+	.pipe(concat("all.min.css"))
+	.pipe(gulp.dest(CSS_DIR));
+
+});
+
+gulp.task("css:build", function cssBuild (callback) {
+
+	sequence(
+		"sass:lint",
+		"sass:compile",
+		"css:format",
+		"css:minify",
+		"css:all-in-one",
+		"css:min-all-in-one"
+	)(callback);
+
+});
+gulp.task("css:clean+build", sequence("css:clean", "css:build"));
+/* CSS */
+
+/* SASS */
+gulp.task("sass:compile", function sassCompile () {
+
+  return gulp.src(SASS_DIR + "/**/*.scss")
+	.pipe(sass().on("error", sass.logError))
+	.pipe(gulp.dest(CSS_DIR));
+
+});
+
+gulp.task("sass:lint", function () {
+
+  return gulp.src(SASS_DIR + "/**/*.scss")
+    .pipe(sassLint())
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError());
+
+});
+
+gulp.task("sass:watch", function sassWatch () {
+
+	gulp.watch(SASS_DIR + "/**/*.scss", ["css:build"]);
+
+});
+/* SASS */
+
+/* JS */
+gulp.task("js:clean", function jsClean () {
+
+  return gulp.src(JS_DIR + "/**/*.min.js", {"read": false})
+	.pipe(clean());
+
+});
+
+gulp.task("js:eslint", function jsEslint () {
+
+  return gulp.src([
+		JS_DIR + "/**/*.js",
+		"!" + JS_DIR + "/**/*.min.js",
+		"!" + JS_DIR + "/all*.js"
+	])
+	.pipe(eslint({
+		"fix": true
+	}))
+	.pipe(eslint.format())
+	.pipe(eslint.failAfterError())
+	.pipe(gulpIf(isFixed, gulp.dest(JS_DIR)));
+
+});
+
+gulp.task("js:minify", function jsMinify () {
+
+  return gulp.src([
+		JS_DIR + "/**/*.js",
+		"!" + JS_DIR + "/**/*.min.js"
+	])
+	.pipe(minifyJS({
+		"ext": {
+			"min": ".min.js"
+		}
+	}))
+	.pipe(gulp.dest(JS_DIR));
+
+});
+
+gulp.task("js:min-all-in-one", function jsAllInOne () {
+
+  return gulp.src([
+		JS_DIR + "/**/*.min.js",
+		"!" + JS_DIR + "/all*.js"
+	])
+	.pipe(concat("all.min.js"))
+	.pipe(gulp.dest(JS_DIR));
+
+});
+
+gulp.task("js:all-in-one", function jsAllInOne () {
+
+  return gulp.src([
+		JS_DIR + "/**/*.js",
+		"!" + JS_DIR + "/**/*.min.js",
+		"!" + JS_DIR + "/all*.js"
+	])
+	.pipe(concat("all.js"))
+	.pipe(gulp.dest(JS_DIR));
+
+});
+
+gulp.task("js:watch", function jsWatch () {
+
+	gulp.watch(JS_DIR + "/**/*.js", ["js:build"]);
+
+});
+
+gulp.task("js:build", function jsBuild (callback) {
+
+	sequence("js:eslint", "js:all-in-one")(callback);
+
+});
+gulp.task("js:clean+build", sequence("js:clean", "js:build"));
+/* JS */
+
+/* GULP */
+gulp.task("gulp:eslint", function gulpEslint () {
+
+  return gulp.src("./gulpfile.js")
+	.pipe(eslint({
+		"fix": true
+	}))
+	.pipe(eslint.format())
+	.pipe(eslint.failAfterError())
+	.pipe(gulpIf(isFixed, gulp.dest("./")));
+
+});
+/* GULP */
+
+/* COMMONS */
+
+gulp.task("webserver", ["watch"], function () {
+
+  gulp.src('.')
+    .pipe(server({
+      "livereload": {
+		"enable": true,
+		"filter": function (filename, cb) {
+
+		  return cb("!/\.(sa|le)ss$|node_modules/");
+
+		}
+	  },
+      "directoryListing": false,
+      "open": true,
+	  "fallback": "index.html",
+	  "defaultFile": "index.html"
+    }));
+
+});
+
+gulp.task("watch", function watch () {
+
+	gulp.watch([
+		SASS_DIR + "/**/*.scss",
+		JS_DIR + "/**/*.js"
+	], ["clean+build"]);
+
+});
+
+gulp.task("clean", ["css:clean", "js:clean"]);
+
+gulp.task("build", ["css:build", "js:build"]);
+
+gulp.task("clean+build", function cleanBuild (callback) {
+
+	sequence("clean", "build")(callback);
+
+});
+
+gulp.task("default", ["clean+build"]);
+/* COMMONS */

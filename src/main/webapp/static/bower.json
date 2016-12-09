@@ -1,5 +1,5 @@
 {
-  "name": "first-spring-project",
+  "name": "spring-project",
   "dependencies": {
     "angular-flash-alert": "^2.3.0",
     "ui-navbar": "^0.4.5",

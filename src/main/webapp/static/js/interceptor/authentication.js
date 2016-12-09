@@ -1,13 +1,16 @@
 
-'use strict';
 
-angular.module("App").factory('APIAuthInterceptor', [function() {  
+angular.module("App").factory("APIAuthInterceptor", [function () {
+
     return {
-        'request': function(config) {
+        "request": function (config) {
+
             config.headers = config.headers || {};
-            var encodedString = btoa("gabriele:gabriele");
-            config.headers.Authorization = 'Basic ' + encodedString;
+            let encodedString = btoa("gabriele:gabriele");
+            config.headers.Authorization = "Basic " + encodedString;
             return config;
-        }
+
+}
     };
+
 }]);
