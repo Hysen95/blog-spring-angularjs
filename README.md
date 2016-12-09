@@ -1,4 +1,4 @@
-## Blog -> Spring + AngularJS
+## Blog = Spring + AngularJS
 -------
 
 ## Informations
