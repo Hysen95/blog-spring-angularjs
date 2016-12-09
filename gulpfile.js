@@ -15,9 +15,11 @@ const clean = require("gulp-clean"),
 	sassLint = require("gulp-sass-lint"),
 	server = require("gulp-server-livereload");
 
-const CSS_DIR = "./css",
-	JS_DIR = "./js",
-	SASS_DIR = "./sass";
+const CONTEXT = "src/main/webapp/static";
+	
+const CSS_DIR = CONTEXT + "/css",
+	JS_DIR = CONTEXT + "/js",
+	SASS_DIR = CONTEXT + "/sass";
 /* CONSTS */
 
 /* UTIL */

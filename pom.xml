@@ -171,19 +171,30 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>gulp build</id>
+						<id>npm rebuild node-sass</id>
 						<goals>
-							<goal>gulp</goal>
+							<goal>npm</goal>
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-							<arguments>build</arguments>
+							<arguments>rebuild node-sass</arguments>
+						</configuration>
+					</execution>
+					<execution>
+						<id>gulp</id>
+						<goals>
+							<goal>npm</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<arguments>run gulp clean+build</arguments>
 						</configuration>
 					</execution>
 				</executions>
 				<configuration>
 					<nodeVersion>v6.4.0</nodeVersion>
 					<npmVersion>3.10.8</npmVersion>
+					<workingDirectory></workingDirectory>
 				</configuration>
 			</plugin>
 		</plugins>
