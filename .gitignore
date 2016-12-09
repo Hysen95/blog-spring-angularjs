@@ -2,6 +2,6 @@ target
 node_modules
 node
 bower_components
-/.*
-*.min.*
 all*.*
+*.min.*
+.*
