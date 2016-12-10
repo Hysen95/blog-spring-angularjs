@@ -43,7 +43,7 @@ let App = angular.module("App", [
 
 }])
 .constant("APP_CONSTANTS", {
-	"baseUrl": "http://localhost:" + "8080" + "/" + "first-spring-project",
+	"baseUrl": "http://localhost:" + "8080" + "/" + "spring-project",
 	"flashMessage": {
 		"timeout": 3000
 	}
@@ -52,7 +52,7 @@ let App = angular.module("App", [
 	  "restServiceURI": "http://localhost:"
 		+ "8080"
 		+ "/"
-		+ "first-spring-project"
+		+ "spring-project"
 		+ "/api/"
 		+ "v1"
 		+ "/",

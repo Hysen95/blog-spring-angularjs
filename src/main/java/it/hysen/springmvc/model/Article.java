@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
@@ -19,13 +21,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "articles")
 @NamedQuery(name = "Article.findAll", query = "SELECT a FROM Article a")
-public class Article extends AbstractEntity<Long> {
+public class Article extends AbstractEntity<Integer> {
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@Column(name = "article_id")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	
 	@Lob
 	private String body;
@@ -78,7 +81,7 @@ public class Article extends AbstractEntity<Long> {
 	}
 	
 	@Override
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 	
@@ -102,7 +105,7 @@ public class Article extends AbstractEntity<Long> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (this.id ^ this.id >>> 32);
+		result = prime * result + (this.id ^ this.id >>> 32);
 		return result;
 	}
 	
@@ -119,7 +122,7 @@ public class Article extends AbstractEntity<Long> {
 	}
 	
 	@Override
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
@@ -18,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "roles")
 @NamedQuery(name = "Role.findAll", query = "SELECT r FROM Role r")
-public class Role extends AbstractEntity<Long> {
+public class Role extends AbstractEntity<Integer> {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -28,11 +30,12 @@ public class Role extends AbstractEntity<Long> {
 	private String name;
 
 	@Column(name = "parent_id")
-	private Long parentId;
+	private Integer parentId;
 
 	@Id
 	@Column(name = "role_id")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	// bi-directional many-to-many association to User
 	@ManyToMany(mappedBy = "roles")
@@ -61,7 +64,7 @@ public class Role extends AbstractEntity<Long> {
 	}
 
 	@Override
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
@@ -73,7 +76,7 @@ public class Role extends AbstractEntity<Long> {
 		return this.name;
 	}
 
-	public Long getParentId() {
+	public Integer getParentId() {
 		return this.parentId;
 	}
 
@@ -85,12 +88,12 @@ public class Role extends AbstractEntity<Long> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (this.id ^ this.id >>> 32);
+		result = prime * result + (this.id ^ this.id >>> 32);
 		return result;
 	}
 
 	@Override
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -102,7 +105,7 @@ public class Role extends AbstractEntity<Long> {
 		this.name = name;
 	}
 	
-	public void setParentId(Long parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
 	

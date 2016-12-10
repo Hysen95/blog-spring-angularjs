@@ -11,12 +11,12 @@ import it.hysen.springmvc.dao.UserDAO;
 import it.hysen.springmvc.model.User;
 
 @Service("userService")
-public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
+public class UserServiceImpl extends AbstractGenericService<User, Integer> implements UserService {
 
 	@Autowired
 	private UserDAO dao;
 
-	public UserServiceImpl(@Qualifier("userDAOImpl") GenericDAO<User, Long> genericDAO) {
+	public UserServiceImpl(@Qualifier("userDAOImpl") GenericDAO<User, Integer> genericDAO) {
 		super(genericDAO);
 		this.dao = (UserDAO) genericDAO;
 	}

@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -27,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "users")
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
-public class User extends AbstractEntity<Long> {
+public class User extends AbstractEntity<Integer> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -61,7 +63,8 @@ public class User extends AbstractEntity<Long> {
 
 	@Id
 	@Column(name = "user_id")
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 
 	private String username;
 
@@ -114,7 +117,7 @@ public class User extends AbstractEntity<Long> {
 	}
 
 	@Override
-	public Long getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
@@ -138,7 +141,9 @@ public class User extends AbstractEntity<Long> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (this.id ^ this.id >>> 32);
+		if (this.id != null) {
+			result = prime * result + (this.id ^ this.id >>> 32);
+		}
 		return result;
 	}
 
@@ -170,7 +175,7 @@ public class User extends AbstractEntity<Long> {
 	}
 
 	@Override
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

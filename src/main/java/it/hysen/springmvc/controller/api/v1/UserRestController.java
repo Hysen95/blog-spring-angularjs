@@ -18,51 +18,51 @@ import it.hysen.springmvc.service.GenericService;
 import it.hysen.springmvc.service.UserService;
 
 @RestController
-public class UserRestController extends AbstractCRUDRestController<User, Long>
-        implements SoftOperationsRestController<User, Long> {
-
+public class UserRestController extends AbstractCRUDRestController<User, Integer>
+        implements SoftOperationsRestController<User, Integer> {
+	
 	@Autowired
 	private UserService service;
-
-	public UserRestController(@Qualifier("userService") GenericService<User, Long> genericService) {
+	
+	public UserRestController(@Qualifier("userService") GenericService<User, Integer> genericService) {
 		super(genericService);
 		this.service = (UserService) genericService;
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/", method = RequestMethod.POST)
 	public ResponseEntity<Void> create(@RequestBody User entity) {
 		entity.setPassword(this.service.hashPassword(entity.getPassword()));
 		return super.create(entity);
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/{key}", method = RequestMethod.DELETE)
-	public ResponseEntity<User> delete(@PathVariable("key") Long key) {
+	public ResponseEntity<User> delete(@PathVariable("key") Integer key) {
 		return super.delete(key);
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deleteAll() {
 		return super.deleteAll();
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
-	public ResponseEntity<User> find(@PathVariable("id") Long key) {
+	public ResponseEntity<User> find(@PathVariable("id") Integer key) {
 		return super.find(key);
 	}
-
+	
 	@Override
 	@RequestMapping(value = "/user/", method = RequestMethod.GET)
 	public ResponseEntity<List<User>> findAll() {
 		return super.findAll();
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/soft/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<User> softDelete(@PathVariable("id") Long key) {
+	public ResponseEntity<User> softDelete(@PathVariable("id") Integer key) {
 		User user = this.service.find(key);
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -70,10 +70,10 @@ public class UserRestController extends AbstractCRUDRestController<User, Long>
 		this.service.softDelete(user);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/soft/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<User> softReactive(@PathVariable("id") Long key) {
+	public ResponseEntity<User> softReactive(@PathVariable("id") Integer key) {
 		User user = this.service.find(key);
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -81,11 +81,11 @@ public class UserRestController extends AbstractCRUDRestController<User, Long>
 		this.service.softReactive(user);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
-	
+
 	@Override
 	@RequestMapping(value = "/user/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<User> update(@PathVariable("id") Long key, @RequestBody User entity) {
+	public ResponseEntity<User> update(@PathVariable("id") Integer key, @RequestBody User entity) {
 		return super.update(key, entity);
 	}
-	
+
 }

@@ -109,7 +109,7 @@
 	                      </div>
 	
 	                      <div class="row">
-	                          <div class="form-actions floatRight">
+	                          <div class="form-actions float-right">
 	                              <input type="submit"  value="{{!ctrl.model.id ? 'Add' : 'Update'}}" class="btn btn-primary btn-sm" ng-disabled="form.$invalid">
 	                              <button type="button" ng-click="ctrl.reset()" class="btn btn-warning btn-sm" ng-disabled="form.$pristine">
 	                              	Reset Form
@@ -127,7 +127,7 @@
 			              	<span class="lead"  ng-if="ctrl.list.length == 0">Empty list of Users</span>
 	              		</div>
 	              		<div class="col-sm-3" ng-show="ctrl.list.length > 0">
-	              			<input type="text" placeholder="Search..." ng-model="searchText" class="form-control" />
+	              			<input type="text" placeholder="Search..." ng-model="searchText" class="form-control  search" />
 	              		</div>
 	              	</div>
 	              </div>

@@ -11,16 +11,22 @@ import it.hysen.springmvc.dao.RoleDAO;
 import it.hysen.springmvc.model.Role;
 
 @Service("roleService")
-public class RoleServiceImpl extends GenericServiceImpl<Role, Long> implements RoleService {
+public class RoleServiceImpl extends AbstractGenericService<Role, Integer> implements RoleService {
 
 	@Autowired
 	private RoleDAO dao;
 	
-	public RoleServiceImpl(@Qualifier("roleDAOImpl") GenericDAO<Role, Long> genericDAO) {
+	public RoleServiceImpl(@Qualifier("roleDAOImpl") GenericDAO<Role, Integer> genericDAO) {
 		super(genericDAO);
 		this.dao = (RoleDAO) genericDAO;
 	}
 	
+	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
+	public boolean isParentRoleExist(Role entity) {
+		return this.dao.findByParentId(entity) != null;
+	}
+
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public boolean isRoleExist(Role entity) {

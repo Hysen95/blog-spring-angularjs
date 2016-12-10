@@ -13,11 +13,11 @@ import org.springframework.stereotype.Repository;
 import it.hysen.springmvc.model.User;
 
 @Repository
-public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
-
+public class UserDAOImpl extends AbstractGenericDAO<User, Integer> implements UserDAO {
+	
 	@Autowired
 	private PasswordEncoder encoder;
-	
+
 	@Override
 	public User findByEmail(User entity) {
 		List<User> result = this.findAll();
@@ -28,7 +28,7 @@ public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public User findByUsername(User entity) {
 		List<User> result = this.findAll();
@@ -39,7 +39,7 @@ public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public User findByUsernameAndPassword(User entity) {
 		List<User> result = this.findAll();
@@ -53,18 +53,12 @@ public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public String hashPassword(String password) {
 		return this.encoder.encode(password);
 	}
-	
-	@Override
-	public void softReactive(User entity) {
-		entity.setDeletedAt(null);
-		this.update(entity);
-	}
-	
+
 	@Override
 	public void softDelete(User entity) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -72,7 +66,7 @@ public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
 		entity.setDeletedAt(Timestamp.valueOf(dateFormat.format(date)));
 		this.update(entity);
 	}
-	
+
 	@Override
 	public void softDeleteAll() {
 		List<User> result = this.findAll();
@@ -84,5 +78,11 @@ public class UserDAOImpl extends GenericDAOImpl<User, Long> implements UserDAO {
 			this.update(item);
 		}
 	}
-	
+
+	@Override
+	public void softReactive(User entity) {
+		entity.setDeletedAt(null);
+		this.update(entity);
+	}
+
 }

@@ -11,14 +11,8 @@ import org.springframework.stereotype.Repository;
 import it.hysen.springmvc.model.Article;
 
 @Repository
-public class ArticleDAOImpl extends GenericDAOImpl<Article, Long> implements ArticleDAO {
-
-	@Override
-	public void softReactive(Article entity) {
-		entity.setDeletedAt(null);
-		this.update(entity);
-	}
-
+public class ArticleDAOImpl extends AbstractGenericDAO<Article, Integer> implements ArticleDAO {
+	
 	@Override
 	public void softDelete(Article entity) {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -26,7 +20,7 @@ public class ArticleDAOImpl extends GenericDAOImpl<Article, Long> implements Art
 		entity.setDeletedAt(Timestamp.valueOf(dateFormat.format(date)));
 		this.update(entity);
 	}
-
+	
 	@Override
 	public void softDeleteAll() {
 		List<Article> result = this.findAll();
@@ -38,5 +32,11 @@ public class ArticleDAOImpl extends GenericDAOImpl<Article, Long> implements Art
 			this.update(item);
 		}
 	}
-
+	
+	@Override
+	public void softReactive(Article entity) {
+		entity.setDeletedAt(null);
+		this.update(entity);
+	}
+	
 }

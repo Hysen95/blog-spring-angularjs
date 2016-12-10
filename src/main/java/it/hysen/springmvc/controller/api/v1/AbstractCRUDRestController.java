@@ -21,7 +21,7 @@ public abstract class AbstractCRUDRestController<E extends AbstractEntity<K>, K 
 	
 	@Override
 	public ResponseEntity<Void> create(E entity) {
-		if (this.genericService.find(entity.getId()) != null) {
+		if (entity.getId() != null && this.genericService.find(entity.getId()) != null) {
 			return new ResponseEntity<>(HttpStatus.CONFLICT);
 		}
 		this.genericService.saveOrUpdate(entity);

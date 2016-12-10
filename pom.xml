@@ -4,7 +4,7 @@
 	<groupId>it.hysen.springmvc</groupId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
-	<name>first-spring-project</name>
+	<name>spring-project</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -144,7 +144,7 @@
 				<version>2.4</version>
 				<configuration>
 					<warSourceDirectory>src/main/webapp</warSourceDirectory>
-					<warName>first-spring-project</warName>
+					<warName>spring-project</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
@@ -198,7 +198,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>first-spring-project</finalName>
+		<finalName>spring-project</finalName>
 	</build>
-	<artifactId>first-spring-project</artifactId>
+	<artifactId>spring-project</artifactId>
 </project>

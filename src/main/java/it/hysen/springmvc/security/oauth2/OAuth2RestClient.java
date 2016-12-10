@@ -18,15 +18,15 @@ import it.hysen.springmvc.model.AuthTokenInfo;
 import it.hysen.springmvc.model.User;
 
 public class OAuth2RestClient {
-
-	public static final String REST_SERVICE_URI = "http://localhost:8080/first-spring-project/api";
-
-	public static final String AUTH_SERVER_URI = "http://localhost:8080/first-spring-project/oauth/token";
-
+	
+	public static final String REST_SERVICE_URI = "http://localhost:8080/spring-project/api";
+	
+	public static final String AUTH_SERVER_URI = "http://localhost:8080/spring-project/oauth/token";
+	
 	public static final String QPM_PASSWORD_GRANT = "?grant_type=password&username=gabriele&password=gabriele";
-
+	
 	public static final String QPM_ACCESS_TOKEN = "?access_token=";
-
+	
 	/*
 	 * Send a POST request to create a new user.
 	 */
@@ -40,7 +40,7 @@ public class OAuth2RestClient {
 		        + OAuth2RestClient.QPM_ACCESS_TOKEN + tokenInfo.getAccessToken(), request, User.class);
 		System.out.println("Location : " + uri.toASCIIString());
 	}
-
+	
 	/*
 	 * Send a DELETE request to delete all users.
 	 */
@@ -52,7 +52,7 @@ public class OAuth2RestClient {
 		restTemplate.exchange(OAuth2RestClient.REST_SERVICE_URI + "/user/" + OAuth2RestClient.QPM_ACCESS_TOKEN
 		        + tokenInfo.getAccessToken(), HttpMethod.DELETE, request, User.class);
 	}
-
+	
 	/*
 	 * Send a DELETE request to delete a specific user.
 	 */
@@ -64,7 +64,7 @@ public class OAuth2RestClient {
 		restTemplate.exchange(OAuth2RestClient.REST_SERVICE_URI + "/user/3" + OAuth2RestClient.QPM_ACCESS_TOKEN
 		        + tokenInfo.getAccessToken(), HttpMethod.DELETE, request, User.class);
 	}
-
+	
 	/*
 	 * Prepare HTTP Headers.
 	 */
@@ -73,7 +73,7 @@ public class OAuth2RestClient {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		return headers;
 	}
-
+	
 	/*
 	 * Add HTTP Authorization header, using Basic-Authentication to send
 	 * client-credentials.
@@ -81,12 +81,12 @@ public class OAuth2RestClient {
 	private static HttpHeaders getHeadersWithClientCredentials() {
 		String plainClientCredentials = "my-trusted-client:secret";
 		String base64ClientCredentials = new String(Base64.encodeBase64(plainClientCredentials.getBytes()));
-
+		
 		HttpHeaders headers = OAuth2RestClient.getHeaders();
 		headers.add("Authorization", "Basic " + base64ClientCredentials);
 		return headers;
 	}
-
+	
 	/*
 	 * Send a GET request to get a specific user.
 	 */
@@ -100,22 +100,22 @@ public class OAuth2RestClient {
 		User user = response.getBody();
 		System.out.println(user);
 	}
-
+	
 	/*
 	 * Send a GET request to get list of all users.
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static void listAllUsers(AuthTokenInfo tokenInfo) {
 		Assert.notNull(tokenInfo, "Authenticate first please......");
-
+		
 		System.out.println("\nTesting listAllUsers API-----------");
 		RestTemplate restTemplate = new RestTemplate();
-
+		
 		HttpEntity<String> request = new HttpEntity<>(OAuth2RestClient.getHeaders());
 		ResponseEntity<List> response = restTemplate.exchange(OAuth2RestClient.REST_SERVICE_URI + "/user/"
 		        + OAuth2RestClient.QPM_ACCESS_TOKEN + tokenInfo.getAccessToken(), HttpMethod.GET, request, List.class);
 		List<LinkedHashMap<String, Object>> usersMap = response.getBody();
-
+		
 		if (usersMap != null) {
 			for (LinkedHashMap<String, Object> map : usersMap) {
 				System.out.println("User : id=" + map.get("id") + ", Name=" + map.get("name") + ", Age="
@@ -127,26 +127,26 @@ public class OAuth2RestClient {
 			System.out.println("No user exist----------");
 		}
 	}
-
+	
 	public static void main(String args[]) {
 		AuthTokenInfo tokenInfo = OAuth2RestClient.sendTokenRequest();
 		OAuth2RestClient.listAllUsers(tokenInfo);
-
+		
 		OAuth2RestClient.getUser(tokenInfo);
-
+		
 		OAuth2RestClient.createUser(tokenInfo);
 		OAuth2RestClient.listAllUsers(tokenInfo);
-
+		
 		OAuth2RestClient.updateUser(tokenInfo);
 		OAuth2RestClient.listAllUsers(tokenInfo);
-
+		
 		OAuth2RestClient.deleteUser(tokenInfo);
 		OAuth2RestClient.listAllUsers(tokenInfo);
-
+		
 		OAuth2RestClient.deleteAllUsers(tokenInfo);
 		OAuth2RestClient.listAllUsers(tokenInfo);
 	}
-
+	
 	/*
 	 * Send a POST request [on /oauth/token] to get an access-token, which will
 	 * then be send with each request.
@@ -154,14 +154,14 @@ public class OAuth2RestClient {
 	@SuppressWarnings({ "unchecked" })
 	private static AuthTokenInfo sendTokenRequest() {
 		RestTemplate restTemplate = new RestTemplate();
-
+		
 		HttpEntity<String> request = new HttpEntity<>(OAuth2RestClient.getHeadersWithClientCredentials());
 		ResponseEntity<Object> response = restTemplate.exchange(
 		        OAuth2RestClient.AUTH_SERVER_URI + OAuth2RestClient.QPM_PASSWORD_GRANT, HttpMethod.POST, request,
 		        Object.class);
 		LinkedHashMap<String, Object> map = (LinkedHashMap<String, Object>) response.getBody();
 		AuthTokenInfo tokenInfo = null;
-
+		
 		if (map != null) {
 			tokenInfo = new AuthTokenInfo();
 			tokenInfo.setAccessToken((String) map.get("access_token"));
@@ -178,11 +178,11 @@ public class OAuth2RestClient {
 		}
 		else {
 			System.out.println("No user exist----------");
-
+			
 		}
 		return tokenInfo;
 	}
-
+	
 	/*
 	 * Send a PUT request to update an existing user.
 	 */

@@ -18,13 +18,13 @@ import it.hysen.springmvc.service.ArticleService;
 import it.hysen.springmvc.service.GenericService;
 
 @RestController
-public class ArticleRestController extends AbstractCRUDRestController<Article, Long>
-        implements SoftOperationsRestController<Article, Long> {
+public class ArticleRestController extends AbstractCRUDRestController<Article, Integer>
+        implements SoftOperationsRestController<Article, Integer> {
 
 	@Autowired
 	private ArticleService service;
 
-	public ArticleRestController(@Qualifier("articleService") GenericService<Article, Long> genericService) {
+	public ArticleRestController(@Qualifier("articleService") GenericService<Article, Integer> genericService) {
 		super(genericService);
 		this.service = (ArticleService) genericService;
 	}
@@ -37,7 +37,7 @@ public class ArticleRestController extends AbstractCRUDRestController<Article, L
 	
 	@Override
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Article> delete(@PathVariable("id") Long key) {
+	public ResponseEntity<Article> delete(@PathVariable("id") Integer key) {
 		return super.delete(key);
 	}
 	
@@ -49,7 +49,7 @@ public class ArticleRestController extends AbstractCRUDRestController<Article, L
 	
 	@Override
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Article> find(@PathVariable("id") Long key) {
+	public ResponseEntity<Article> find(@PathVariable("id") Integer key) {
 		return super.find(key);
 	}
 	
@@ -61,7 +61,7 @@ public class ArticleRestController extends AbstractCRUDRestController<Article, L
 	
 	@Override
 	@RequestMapping(value = "/article/soft/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Article> softDelete(@PathVariable("id") Long key) {
+	public ResponseEntity<Article> softDelete(@PathVariable("id") Integer key) {
 		Article entity = this.service.find(key);
 		if (entity == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -72,7 +72,7 @@ public class ArticleRestController extends AbstractCRUDRestController<Article, L
 	
 	@Override
 	@RequestMapping(value = "/article/soft/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Article> softReactive(@PathVariable("id") Long key) {
+	public ResponseEntity<Article> softReactive(@PathVariable("id") Integer key) {
 		Article entity = this.service.find(key);
 		if (entity == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -83,7 +83,7 @@ public class ArticleRestController extends AbstractCRUDRestController<Article, L
 	
 	@Override
 	@RequestMapping(value = "/article/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Article> update(@PathVariable("id") Long key, @RequestBody Article entity) {
+	public ResponseEntity<Article> update(@PathVariable("id") Integer key, @RequestBody Article entity) {
 		return super.update(key, entity);
 	}
 	
