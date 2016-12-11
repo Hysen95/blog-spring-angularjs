@@ -1,27 +1,26 @@
 
-$white: #fff;
+@import "common";
+
 $ng-valid: #a8e33b;
 $ng-invalid: #f00;
 $ng-invalid-minlength-maxlength: #ff0;
 
 input {
 	&.ng-valid {
-		background-color: $ng-valid;
+		@include background($ng-valid);
 	}
-	
 	&.ng-dirty {
 		&.ng-invalid-required,
 		&.ng-invalid,
 		&.ng-invalid-email {
-			background-color: $ng-invalid;
+			@include background($ng-invalid);
 		}
 		&.ng-invalid-minlength,
 		&.ng-invalid-maxlength {
-			background-color: $ng-invalid-minlength-maxlength;
+			@include background($ng-invalid-minlength-maxlength);
 		}
 	}
-	
 	&.search {
-		background-color: $white;
+		@include background($white);
 	}
 }

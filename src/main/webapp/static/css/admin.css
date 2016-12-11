@@ -1,8 +1,11 @@
-.ng-valid {
-  background-color: #90e; }
+input.ng-valid {
+  background-color: #a8e33b; }
 
-.ng-dirty.ng-invalid-required, .ng-dirty.ng-invalid, .ng-dirty.ng-invalid-email {
+input.ng-dirty.ng-invalid-required, input.ng-dirty.ng-invalid, input.ng-dirty.ng-invalid-email {
   background-color: #f00; }
 
-.ng-dirty.ng-invalid-minlength, .ng-dirty.ng-invalid-maxlength {
+input.ng-dirty.ng-invalid-minlength, input.ng-dirty.ng-invalid-maxlength {
   background-color: #ff0; }
+
+input.search {
+  background-color: #fff; }

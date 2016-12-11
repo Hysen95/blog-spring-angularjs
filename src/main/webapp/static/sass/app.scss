@@ -1,7 +1,5 @@
 
-$white-smoke: #f5f5f5;
-$dark-red: #8b0000;
-$sky-line: #dae8e8;
+@import "common";
 
 body {
 	background-color: $white-smoke;
