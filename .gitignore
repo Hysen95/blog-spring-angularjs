@@ -1,8 +1,10 @@
-target
-node_modules
-node
-bower_components
+target/
+node_modules/
+node/
+bower_components/
 all*.*
 *.min.*
 .*
+src/main/webapp/static/css/
+
 !.eslintrc
