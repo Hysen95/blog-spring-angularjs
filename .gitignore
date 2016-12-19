@@ -5,6 +5,7 @@ bower_components/
 all*.*
 *.min.*
 .*
+!.travis.yml
 src/main/webapp/static/css/
 
 !.eslintrc
